@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,3 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model bets {
+  id            Int           @id @default(autoincrement())
+  createdAt     DateTime?     @default(now()) @db.Timestamptz(6)
+  updatedAt     DateTime?     @default(now()) @db.Timestamptz(6)
+  homeTeamScore Int
+  awayTeamScore Int
+  amountBet     Int
+  gameId        Int?
+  participantId Int?
+  Status        String        @db.VarChar(50)
+  amountWon     Int?
+  games         games?        @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  participants  participants? @relation(fields: [participantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model games {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime? @default(now()) @db.Timestamptz(6)
+  updatedAt     DateTime? @default(now()) @db.Timestamptz(6)
+  homeTeamName  String    @db.VarChar(255)
+  awayTeamName  String    @db.VarChar(255)
+  homeTeamScore Int
+  awayTeamScore Int
+  isFinished    Boolean
+  bets          bets[]
+}
+
+model participants {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime? @default(now()) @db.Timestamptz(6)
+  name      String    @db.VarChar(255)
+  balance   Int
+  bets      bets[]
+}
