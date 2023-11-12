@@ -5,15 +5,15 @@ import * as gamesController from "../controllers/games.controller"
 
 const gamesRouter = Router();
 
-gamesRouter.get('/games', gamesController.getGamesController );
+gamesRouter.get('/games', gamesController.getGamesController);
 
-gamesRouter.get('/games/:id', );
+gamesRouter.get('/games/:id', gamesController.getGameByIdController);
 
-gamesRouter.post('/games', validateSchema(createGameSchema), );
+gamesRouter.post('/games', validateSchema(createGameSchema), gamesController.postGamesController);
 
-gamesRouter.post('/games/:id/finish', validateSchema(finishBetSchema), );
+gamesRouter.post('/games/:id/finish', validateSchema(finishBetSchema), gamesController.finishGameController);
 
-gamesRouter.post('/bets', validateSchema(createBetSchema), );
+gamesRouter.post('/bets', validateSchema(createBetSchema), gamesController.postBetController);
 
 
 export { gamesRouter };

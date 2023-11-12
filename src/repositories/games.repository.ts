@@ -147,6 +147,9 @@ export async function readGameById(id: number) {
     let res = await prisma.games.findFirst({
         where: {
             id
+        },
+        include: {
+            bets: true
         }
     })
 

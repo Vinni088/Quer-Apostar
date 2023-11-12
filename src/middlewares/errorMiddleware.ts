@@ -6,8 +6,13 @@ export default function errorHandler(error: ApplicationError, req: Request, res:
     //console.log(error);
 
     if (error.type === "valorBaixo") {
-        return res.status(httpStatus.CONFLICT).send(error.message);
+        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
     }
+
+    if (error.type === "invalidId") {
+        return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
+    }
+
     if (error.type === "conflict") {
         return res.status(httpStatus.CONFLICT).send(error.message);
     }
