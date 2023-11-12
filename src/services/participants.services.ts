@@ -8,7 +8,7 @@ export async function getParticipant() {
 }
 
 export async function postParticipant(name: string, balance: number) {
-    if (balance < 10) {
+    if (balance < 1000) {
         throw({
             type: 'valorBaixo',
             message: 'Você não pode cadastrar um usuario com mneos de 10R$'

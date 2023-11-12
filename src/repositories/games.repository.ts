@@ -72,7 +72,17 @@ export async function betFinishCollaterals(
     gameId: number
 ) {
     let totalApostado = await prisma.bets.aggregate({
-        where: { id: gameId },
+        where: { gameId },
+        _sum: {
+            amountBet: true
+        }
+    }) as any;
+    let totalApostadoVencido = await prisma.bets.aggregate({
+        where: {
+            gameId,
+            homeTeamScore,
+            awayTeamScore
+        },
         _sum: {
             amountBet: true
         }
@@ -85,22 +95,52 @@ export async function betFinishCollaterals(
         }
     });
 
-    let aposadoresGanhadores = await prisma.participants.findMany({
+    console.log(totalApostado)
+    totalApostado = totalApostado._sum.amountBet
+    totalApostadoVencido = totalApostadoVencido._sum.amountBet
+    console.log("apostas vencidas: " + numeroDeApostasVencidos);
+    console.log("total apostado: " + totalApostado);
+    console.log("apostas vitoriosas: " + totalApostadoVencido);
+
+    let vencedores = await prisma.bets.findMany({
         where: {
-            bets: {
-                every: {
-                    homeTeamScore,
-                    awayTeamScore
+            homeTeamScore,
+            awayTeamScore
+        }
+    })
+
+    let balanceWon;
+    vencedores.forEach( async ( bet ) => {
+        balanceWon = ( bet.amountBet / totalApostadoVencido ) * (totalApostado) * (0.97);
+        console.log(balanceWon)
+        await prisma.bets.update({
+            where: {
+                id: bet.id
+            },
+            data: {
+                Status: 'WON',
+                amountWon: balanceWon,
+                updatedAt: agora
+            }
+        });
+
+        await prisma.participants.update({
+            where: {
+                id: bet.participantId
+            },
+            data: {
+                balance: {
+                    increment: balanceWon
                 }
             }
-        }
-    });
+        })
+    })
+    
 
-    let quantiaGanha = totalApostado / numeroDeApostasVencidos;
-
+    
     const agora = new Date()
 
-    /* Efeito nos perdedores: só nas bets */
+    /* efeito nas bets */
     await prisma.bets.updateMany({
         where: {
             homeTeamScore: { not: homeTeamScore },
@@ -111,36 +151,6 @@ export async function betFinishCollaterals(
             amountWon: 0,
             updatedAt: agora
         }
-    });
-
-
-    /* Efeito nos vencedores */
-    /* efeito nas bets */
-    await prisma.bets.updateMany({
-        where: {
-            homeTeamScore,
-            awayTeamScore
-        },
-        data: {
-            Status: 'WON',
-            amountWon: quantiaGanha,
-            updatedAt: agora
-        }
-    });
-
-    /* efeito nos balances */
-    console.log(quantiaGanha);
-    aposadoresGanhadores.forEach(async (apostador) => {
-        await prisma.participants.update({
-            where: {
-                id: apostador.id
-            },
-            data: {
-                balance: {
-                    increment: quantiaGanha
-                }
-            }
-        })
     });
 
 }
@@ -157,3 +167,25 @@ export async function readGameById(id: number) {
 
     return res
 }
+
+/* acessos incidentais: */
+export async function checkParticipant(id: number) {
+    let participant = await prisma.participants.findFirst({
+        where: {
+            id
+        }
+    })
+
+    return participant
+}
+
+export async function checkGame(id: number) {
+    let game = await prisma.games.findFirst({
+        where: {
+            id
+        }
+    })
+
+    return game
+}
+
