@@ -12,7 +12,7 @@ export async function getGamesController(req: Request, res: Response) {
 export async function getGameByIdController(req: Request, res: Response) {
     const { id } = req.params
 
-    const gameAndBets = gameService.getGameById(id)
+    const gameAndBets = await gameService.getGameById(id)
 
     return res.status(httpStatus.OK).send(gameAndBets);
 }
@@ -26,13 +26,18 @@ export async function postGamesController(req: Request, res: Response) {
 }
 
 export async function finishGameController(req: Request, res: Response) {
-    const games = 0
+    const { id } = req.params;
+    const { homeTeamScore, awayTeamScore } = req.body
 
-    return res.status(httpStatus.OK).send("em construção");
+    let resposta = await gameService.finishGame(homeTeamScore, awayTeamScore, id)
+
+    return res.status(httpStatus.OK).send(resposta);
 }
 
 export async function postBetController(req: Request, res: Response) {
-    const games = 0
+    const { homeTeamScore, awayTeamScore, amountBet, gameId, participantId } = req.body
 
-    return res.status(httpStatus.OK).send("em construção");
+    let resposta = await gameService.createBet(homeTeamScore, awayTeamScore, amountBet, gameId, participantId)
+
+    return res.status(httpStatus.OK).send(resposta);
 }

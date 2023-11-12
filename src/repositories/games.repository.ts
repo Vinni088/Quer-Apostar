@@ -18,8 +18,7 @@ export async function createBet(
     awayTeamScore: number,
     amountBet: number,
     gameId: number,
-    participantId: number,
-    playerNewBalance: number
+    participantId: number
 ) {
     let res = await prisma.bets.create({
         data: {
@@ -33,10 +32,12 @@ export async function createBet(
         }
     })
 
-    let balanceEffect = prisma.participants.update({
+    let balanceEffect = await prisma.participants.update({
         where: { id: participantId },
         data: {
-            balance: playerNewBalance
+            balance: {
+                decrement: amountBet
+            }
         }
     })
     return res
@@ -71,18 +72,18 @@ export async function betFinishCollaterals(
     gameId: number
 ) {
     let totalApostado = await prisma.bets.aggregate({
-        where: { gameId },
+        where: { id: gameId },
         _sum: {
             amountBet: true
         }
-    }) as any
+    }) as any;
 
     let numeroDeApostasVencidos = await prisma.bets.count({
         where: {
             homeTeamScore,
             awayTeamScore
         }
-    })
+    });
 
     let aposadoresGanhadores = await prisma.participants.findMany({
         where: {
@@ -93,11 +94,11 @@ export async function betFinishCollaterals(
                 }
             }
         }
-    })
+    });
 
-    let quantiaGanha = totalApostado / numeroDeApostasVencidos
+    let quantiaGanha = totalApostado / numeroDeApostasVencidos;
 
-    const agora = new Date().getTime().toString()
+    const agora = new Date()
 
     /* Efeito nos perdedores: só nas bets */
     await prisma.bets.updateMany({
@@ -110,7 +111,7 @@ export async function betFinishCollaterals(
             amountWon: 0,
             updatedAt: agora
         }
-    })
+    });
 
 
     /* Efeito nos vencedores */
@@ -125,11 +126,12 @@ export async function betFinishCollaterals(
             amountWon: quantiaGanha,
             updatedAt: agora
         }
-    })
+    });
 
     /* efeito nos balances */
+    console.log(quantiaGanha);
     aposadoresGanhadores.forEach(async (apostador) => {
-        await prisma.participants.updateMany({
+        await prisma.participants.update({
             where: {
                 id: apostador.id
             },
