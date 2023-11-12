@@ -5,6 +5,9 @@ import { ApplicationError } from "../protocols/index.protocol"
 export default function errorHandler(error: ApplicationError, req: Request, res: Response, next: NextFunction) {
     //console.log(error);
 
+    if (error.type === "valorBaixo") {
+        return res.status(httpStatus.CONFLICT).send(error.message);
+    }
     if (error.type === "conflict") {
         return res.status(httpStatus.CONFLICT).send(error.message);
     }

@@ -1,14 +1,12 @@
 import { Router } from 'express';
-import httpStatus from "http-status";
-import { Request, Response } from "express";
+import { validateSchema } from '../middlewares/validateSchema';
+import { createUserSchema } from "../schemas/post.schemas"
+import * as participantsController from "../controllers/participants.controller"
 
 const participantsRouter = Router();
 
-participantsRouter.get('/participants', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Get participants");
-});
-participantsRouter.post('/participants', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Post participants");
-});
+participantsRouter.get('/participants', participantsController.participantGet);
+
+participantsRouter.post('/participants', validateSchema(createUserSchema) ,  participantsController.participantPost);
 
 export { participantsRouter };
