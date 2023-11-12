@@ -2,6 +2,10 @@
   "name": "desafio-tecnico",
   "version": "1.0.0",
   "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/server.ts",
@@ -9,9 +13,10 @@
     "test": "dotenv -e .env.test prisma migrate deploy & dotenv -e .env.test jest -- -i",
     "test:cov": "dotenv -e .env.test jest -- --coverage --runInBand "
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vinni088/Desafio-T-cnico.git"
+  },
   "devDependencies": {
     "@types/express": "^4.17.20",
     "@types/jest": "^29.5.7",
@@ -34,5 +39,12 @@
     "express-async-errors": "^3.1.1",
     "http-status": "^1.7.3",
     "joi": "^17.11.0"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vinni088/Desafio-T-cnico/issues"
+  },
+  "homepage": "https://github.com/Vinni088/Desafio-T-cnico#readme"
 }
