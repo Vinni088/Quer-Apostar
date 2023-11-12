@@ -7,11 +7,11 @@ export async function participantPost(req: Request, res: Response) {
 
     const participant = await participantService.postParticipant(name, balance)
 
-    return res.status(httpStatus.CREATED).json(participant);
+    return res.status(httpStatus.CREATED).send(participant);
 }
 
 export async function participantGet(req: Request, res: Response) {
     const participants = await participantService.getParticipant()
 
-    return res.status(httpStatus.OK).json(participants);
+    return res.status(httpStatus.OK).send(participants);
 }

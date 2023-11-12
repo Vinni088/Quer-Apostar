@@ -7,6 +7,6 @@ const participantsRouter = Router();
 
 participantsRouter.get('/participants', participantsController.participantGet);
 
-participantsRouter.post('/participants', validateSchema(createUserSchema) ,  participantsController.participantPost);
+participantsRouter.post('/participants', validateSchema(createUserSchema), participantsController.participantPost);
 
 export { participantsRouter };

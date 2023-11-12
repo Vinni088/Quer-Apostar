@@ -1,28 +1,19 @@
 import { Router } from 'express';
-import httpStatus from "http-status";
-import { Request, Response } from "express";
+import { validateSchema } from '../middlewares/validateSchema';
+import { createBetSchema, createGameSchema, finishBetSchema } from "../schemas/post.schemas"
+import * as gamesController from "../controllers/games.controller"
 
 const gamesRouter = Router();
 
-gamesRouter.get('/games', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Get games");
-});
+gamesRouter.get('/games', gamesController.getGamesController );
 
-gamesRouter.get('/games/:id', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Get games by id");
-});
+gamesRouter.get('/games/:id', );
 
-gamesRouter.post('/games', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Post games");
-});
+gamesRouter.post('/games', validateSchema(createGameSchema), );
 
-gamesRouter.post('/games/:id/finish', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Post games finish");
-});
+gamesRouter.post('/games/:id/finish', validateSchema(finishBetSchema), );
 
-gamesRouter.post('/bets', (req: Request, res: Response) => {
-    res.status(httpStatus.OK).send("Rota Post bets");
-});
+gamesRouter.post('/bets', validateSchema(createBetSchema), );
 
 
 export { gamesRouter };

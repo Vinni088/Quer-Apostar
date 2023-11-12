@@ -30,6 +30,7 @@ export default function errorHandler(error: ApplicationError, req: Request, res:
     if (error.type === "tooManyResults") {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message)
     }
-
+    
+    console.log(error)
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Sorry, something went wrong 😢");
 }
