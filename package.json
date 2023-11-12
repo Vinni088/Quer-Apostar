@@ -6,13 +6,10 @@
   "directories": {
     "test": "tests"
   },
-  "engines": {
-    "node": "16.20"
-  },
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/server.ts",
-    "start": "node src/server.js",
+    "start": "node dist/src/server.js",
     "test": "dotenv -e .env.test prisma migrate deploy & dotenv -e .env.test jest -- -i",
     "test:cov": "dotenv -e .env.test jest -- --coverage --runInBand "
   },
