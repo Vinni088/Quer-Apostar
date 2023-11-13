@@ -22,7 +22,7 @@ export async function postGamesController(req: Request, res: Response) {
 
     let resposta = await gameService.createGame(homeTeamName, awayTeamName);
 
-    return res.status(httpStatus.OK).send(resposta);
+    return res.status(httpStatus.CREATED).send(resposta);
 }
 
 export async function finishGameController(req: Request, res: Response) {
@@ -39,5 +39,5 @@ export async function postBetController(req: Request, res: Response) {
 
     let resposta = await gameService.createBet(homeTeamScore, awayTeamScore, amountBet, gameId, participantId)
 
-    return res.status(httpStatus.OK).send(resposta);
+    return res.status(httpStatus.CREATED).send(resposta);
 }

@@ -21,7 +21,7 @@ export default function errorHandler(error: ApplicationError, req: Request, res:
         return res.status(httpStatus.NOT_FOUND).send(error.message);
     }
 
-    if (error.type === "incompleteData") {
+    /*if (error.type === "incompleteData") {
         return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.message);
     }
 
@@ -34,7 +34,7 @@ export default function errorHandler(error: ApplicationError, req: Request, res:
     }
     if (error.type === "tooManyResults") {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message)
-    }
+    }*/
     
     console.log(error)
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Sorry, something went wrong 😢");

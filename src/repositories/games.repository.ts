@@ -110,6 +110,7 @@ export async function betFinishCollaterals(
     })
 
     let balanceWon;
+    const agora = new Date()
     vencedores.forEach( async ( bet ) => {
         balanceWon = ( bet.amountBet / totalApostadoVencido ) * (totalApostado) * (0.97);
         console.log(balanceWon)
@@ -135,10 +136,6 @@ export async function betFinishCollaterals(
             }
         })
     })
-    
-
-    
-    const agora = new Date()
 
     /* efeito nas bets */
     await prisma.bets.updateMany({

@@ -10,7 +10,7 @@
     "build": "tsc",
     "dev": "nodemon src/server.ts",
     "start": "node dist/src/server.js",
-    "test": "dotenv -e .env.test prisma migrate deploy & dotenv -e .env.test jest -- -i",
+    "test": "dotenv -e .env.test jest -- --runInBand",
     "test:cov": "dotenv -e .env.test jest -- --coverage --runInBand "
   },
   "repository": {

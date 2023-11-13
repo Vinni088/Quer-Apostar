@@ -54,7 +54,7 @@ export async function finishGame(homeTeamScore: any, awayTeamScore: any, gameId:
 
     let resposta = await gamesRepository.createBetFinish(homeTeamScore, awayTeamScore, gameId);
 
-    //await gamesRepository.betFinishCollaterals(homeTeamScore, awayTeamScore, gameId)
+    await gamesRepository.betFinishCollaterals(homeTeamScore, awayTeamScore, gameId)
 
     return resposta
 }
@@ -105,8 +105,6 @@ export async function createBet(homeTeamScore: any, awayTeamScore: any, amountBe
     }
 
     let resposta = await gamesRepository.createBet(homeTeamScore, awayTeamScore, amountBet, gameId, participantId)
-
-    let colateral = await gamesRepository.betFinishCollaterals(homeTeamScore, awayTeamScore, gameId)
 
     return resposta
 }
