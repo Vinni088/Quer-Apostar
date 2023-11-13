@@ -1,6 +1,13 @@
 # Desafio tecnico driven: Quer apostar quanto? (back-end)
 
 - Link deploy: https://desafio-tecnico-deploy.onrender.com
+- para rodar localmente:
+  - crie os scripts `.env` + `.env.test`
+  - utilize `npm i`
+  - utilize `npx prisma db push`
+  - utilize `npx prisma generate`
+    - pronto, suas conexões devem estar funcionando
+  - finalmente, utilize `npm run dev`
 
 ## Rotas:
 
@@ -129,7 +136,7 @@
     ```
 * 
 
-**-** 
+**-**
 
 * **GET** `/games/:id`
   * Retorna os dados de um jogo junto com as apostas atreladas a ele.
