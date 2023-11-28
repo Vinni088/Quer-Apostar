@@ -19,6 +19,13 @@ app.use(participantsRouter);
 app.get("/health", (req: Request, res: Response) => {
   res.status(httpStatus.OK).send("I'm ok!");
 });
+app.get("/", (req: Request, res: Response) => {
+  res.status(httpStatus.OK).send(
+    `Opa! parece que você está tentando acessar o backend do "Quer Apostar?"
+    Se esse for o caso, vejo o ReadMe do projeto em: https://github.com/Vinni088/Quer-Apostar
+    `
+  );
+});
 
 // Middleware de tratamento de erros
 app.use(errorMiddleware);

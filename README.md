@@ -12,6 +12,7 @@
 ## Rotas:
 
 * **POST** `/participants`
+
   * Cria um participante com determinado saldo inicial.
   * Entrada: nome e saldo inicial do participante.
     ```tsx
@@ -31,6 +32,7 @@
     }
     ```
 * **POST** `/games`
+
   * Cria um novo jogo, com placar inicial 0x0 e marcado como não finalizado.
   * Entrada: nome do time da casa e do time visitante.
     ```tsx
@@ -53,6 +55,7 @@
     }
     ```
 * **POST** `/bets`
+
   * Cadastra uma aposta de um participante em um determinado jogo. O valor da aposta deve ser descontado imediatamente do saldo do participante.
   * Entrada:
     ```tsx
@@ -80,6 +83,7 @@
     }
     ```
 * **POST** `/games/:id/finish`
+
   * Finaliza um jogo e consequentemente atualiza todas as apostas atreladas a ele, calculando o valor ganho em cada uma e atualizando o saldo dos participantes ganhadores.
   * Entrada: placar final do jogo.
     ```tsx
@@ -102,6 +106,7 @@
     }
     ```
 * **GET** `/participants`
+
   * Retorna todos os participantes e seus respectivos saldos.
   * Saída: array de todos os participantes.
     ```tsx
@@ -117,6 +122,7 @@
     ]
     ```
 * **GET** `/games`
+
   * Retorna todos os jogos cadastrados.
   * Saída: array de todos os jogos
     ```tsx
@@ -134,11 +140,8 @@
     	{...}
     ]
     ```
-* 
-
-**-**
-
 * **GET** `/games/:id`
+
   * Retorna os dados de um jogo junto com as apostas atreladas a ele.
   * Saída: o objeto do jogo contendo a array de apostas realizadas nele.
     ```tsx
