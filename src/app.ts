@@ -21,8 +21,25 @@ app.get("/health", (req: Request, res: Response) => {
 });
 app.get("/", (req: Request, res: Response) => {
   res.status(httpStatus.OK).send(
-    `Opa! parece que você está tentando acessar o backend do "Quer Apostar?"
-    Se esse for o caso, vejo o ReadMe do projeto em: https://github.com/Vinni088/Quer-Apostar
+    `
+    <div style="
+      width: 95vw; 
+      height: 95vh; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+    ">
+    <p style="
+      padding: 10px;
+      font-size: 2vmax; 
+      border: 2px solid gray;
+      background-color: lightgray;
+      border-radius: 10px;
+    ">
+      Opa! parece que você está tentando acessar o backend do "Quer Apostar?" <br/>
+      Se esse for o caso, leia o ReadMe do projeto em: <a href="https://github.com/Vinni088/Quer-Apostar"> Github: Quer apostar?</a> 
+    </p>
+  <div>
     `
   );
 });
